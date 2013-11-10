@@ -1,160 +1,601 @@
 <!DOCTYPE html>
+
 <html>
-<head>
-    <title></title>
-    <meta charset="utf-8" />
-    <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
-    <link href="styles/main.css" rel="stylesheet" />
+    <head>
+        <title></title>
+        <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+        <script src="cordova.js"></script>
+        <script src="kendo/js/jquery.min.js"></script>
+        <script src="kendo/js/kendo.mobile.min.js"></script>
+<script src="http://cdn.kendostatic.com/2013.2.918/js/kendo.all.min.js"></script>
+<style>
+    .footerstyle
+{width:100%;text-align: center;padding:3px}
+.loading-grid-page {
+color: #ffffff;
+font: 700 11px/25px 'proxima-nova-1', 'proxima-nova-2', sans-serif;
+letter-spacing: 1px;
+text-transform: uppercase;
+background: #111111 url('images/ajax-loader-black.gif') no-repeat 15px center;
+border-radius: 2px;
+border: 1px solid #111111;
+padding: 5px 30px;
+text-align: center;
+width: 200px;
+position: fixed;
+left: 50%;
+top: 50%;
+margin-top: -50px;
+margin-left: -100px;
+z-index: 1000000;
+}    
+    
+#RSSREADER .head {
+	display: block;
+    width:100%;
+	height: auto;
+    -webkit-background-size: 100% auto;
+    background-size: 100% auto;
+}
+.km-ios #music .head {
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+}
+    img {
+        width:100%;
+        height:auto;
+    }
 
-    <script src="cordova.js"></script>
-    <script src="kendo/js/jquery.min.js"></script>
-    <script src="kendo/js/kendo.mobile.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+    .redbg{
+        background-color:#FF3737 !important;
+        color:#FFFFFF;
+    }
+    .redbg2{
+        background-color:#FF3737 !important;
+    }
 
-    <script src="scripts/login.js"></script>
-    <script src="scripts/location.js"></script>
-    <script src="scripts/weather.js"></script>
-    <script src="scripts/app.js"></script>
+</style>        
+    </head>
+    <body>
+        <div id="RSSREADER" data-role="view" data-title="My Rss">
+            <img src="styles/images/banner4-rss.jpg" style="max-height:70px;" />
+  <!--       
+<a href="RSSJM.html?rss=http://corrieredellosport.feedsportal.com/c/34176/f/619179/index.rss&titolo=Roma Corriere" data-role="button" data-rel="external" style="width:65%;margin-left:20px">RSS Roma Corriere</a>
+    <br />
+    <a href="RSSJM.html?rss=http://feeds.feedburner.com/hd-blog&titolo=HD BLOG" data-role="button" data-rel="external" style="width:65%;margin-left:20px;">RSS HD BLOG</a>
+   <br /><br />
+  -->
+        <div style="color:#000000" id="catItems3"></div>
+            <div id="div_Message" style="display:none;" class="loading-grid-page">LOADING PAGE...</div>
 
-</head>
-<body>
-    <!--Home-->
-    <div id="tabstrip-home"
-        data-role="view"
-        data-title="Home">
+            
+<div data-role="footer" data-position="fixed" class="footerstyle" data-theme="d">
+          <a href="#RSSREADER" onclick="goHome()" data-role="button" data-transition="slide:left reverse" data-direction="reverse" style="width:28%;" rel="external"><img src="images/Home.png" style="height:20px;width:25px;opacity:0.6"/></a>
+        <a href="#tabstrip-addcat" onclick="goAddCat()" data-role="button" rel="external" data-transition="slide" style="width:36%;font-size:17px;font-weight:bold">GROUPS</a>     
+          <a href="#RSSREADER" onclick="deleteRss()" data-role="button" rel="external" data-transition="slide" style="width:29%;" class="droptargetRss"><img src="images/trash.png" style="height:20px;width:30px;opacity:0.6"/></a>
+        </div>       
+            
+            </div>            
 
-        <div class="view-content">
-            <h1>Welcome!</h1>
-            <a id="skin-change" data-role="button" data-click="app.changeSkin">Flat</a>
-            <p>
-                Icenium&trade; enables you to build cross-platform device applications regardless of your
-                    development platform by combining the convenience of a local development toolset with the
-                    power and flexibility of the cloud.
-            </p>
-            <div class="img"></div>
-        </div>
-    </div>
+        
+        <div id="tabstrip-addcat" 
+             data-role="view">
+  <img src="styles/images/banner4-rss.jpg" style="max-height:70px;"/>
+          <br />
+            <!--
+            <h1>Add a group:</h1>
+            <div style="padding-left:20px; color:#000000">            
+                <input class="inputBox" type="text" style="color:#000000" id="txtCat" placeholder="Insert here a Group" />
+                <button class="button" id="addButton" onclick="addCategory(); return false;">Add</button>     <br/>       
+        -->
+            
+            <div style="margin-left:20px;"> 
+                <div class="results">
+                        <h3>Groups:</h3>
+                        <div id="catItems2"></div>
+                    </div>
+                    <div class="separator"></div>
+                <div id="catItems"></div>  
+<br />
 
-    <!--Login-->
-    <div id="tabstrip-login"
-        data-role="view"
-        data-title="Login"
-        data-model="app.loginService.viewModel">
+                
+            </div>     
+            
+            
+<div data-role="footer" data-position="fixed" class="footerstyle" data-theme="d">
+          <a href="#RSSREADER" onclick="goHome()" data-role="button" data-transition="slide:left reverse" data-direction="reverse" style="width:28%;" rel="external"><img src="images/Home.png" style="height:20px;width:25px;opacity:0.6"/></a>
+    <a onclick="showPrompt(); return false;" data-role="button" data-transition="slide" style="width:36%;" rel="external"><img src="images/Add2.png" style="height:20px;width:20px;opacity:0.5"/></a>
+        <a href="#tabstrip-addcat" onclick="deleteCat()" data-role="button" rel="external" data-transition="slide" style="width:29%;" class="droptarget"><img src="images/trash.png" style="height:20px;width:30px;opacity:0.6"/></a>
+        </div>       
+                             
 
-        <div class="view-content">
-            <div class="logo"></div>
-            <h3 data-bind="invisible: isLoggedIn">Enter your credentials:</h3>
-            <h1 class="welcome" data-bind="visible: isLoggedIn">Welcome, <span data-bind="text: username"></span>!
-            </h1>
-            <div class="buttonArea">
-                <input type="submit" id="logout" data-role="button" data-bind="click: onLogout, visible: isLoggedIn" class="login-button" value="Logout" />
-            </div>
+      <!--      
+  <div class="draggable-container">
+    
+      
+</div>
+            -->
+            <!--
+            <div id="1" class="draggable-item"><a style="width:99%;" class="km-widget km-button"><span class="km-text">RSS Roma Corriere</span></a></div>
 
-            <form data-bind="events: { keyup: checkEnter }">
-                <ul data-role="listview" data-style="inset" data-bind="invisible: isLoggedIn">
-                    <li>
-                        <label>
-                            Username
-                                <input type="text" data-bind="value: username" />
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            Password
-                                <input type="password" data-bind="value: password" />
-                        </label>
-                    </li>
-                </ul>
+            <div id="2" class="droptarget" style="width:200px;height:200px;background-color:#000000">TEST</div>
+            -->
+          
 
-                <div class="buttonArea">
-                    <input type="submit" id="login" data-role="button" data-bind="click: onLogin, invisible: isLoggedIn" class="login-button" value="Login" />
-                </div>
-            </form>
-        </div>
+<style scoped>
+    .draggable-container {
+        margin: 10px auto;
+        width: 250px;
+        height: 250px;
+        background: #eee;
+        padding: 10px;
+        border: 1px solid black;
+    }
 
-    </div>
+    #draggable-item {
+        width: 100%;
+        height: 40px;
+        padding: 10px;
+        border: 1px solid black;
+        margin: 5px;
+        background: #666;
+        color: white;
+    }
+</style>
 
-    <!--Location-->
-    <div id="tabstrip-location"
-        data-role="view"
-        data-title="Location"
-        data-init="app.locationService.initLocation"
-        data-show="app.locationService.show"
-        data-hide="app.locationService.hide"
-        data-model="app.locationService.viewModel"
-        data-stretch="true">
+            
+            
+        </div>                
+        
+        <div id="tabstrip-addrss" 
+             data-role="view">
+  <img src="styles/images/banner4-rss.jpg" style="max-height:70px;"/>
+            <h2>Add a RSS:</h2>
+            <div style="padding-left:20px; color:#000000">            
+                Name:<br /> <input class="inputBox1" type="text" style="color:#000000" id="txtRss" size="30" height="630px" /><br />
+                Url:<br /> <input class="inputBox2" type="text" style="color:#000000" id="txtRssUrl" value="http://" size="30" height="630px" /><br />
+                <button class="button" id="addButton" onclick="addRss2();" style="padding:10px">Add</button>     <br/><br/>
+             <br/>
+                
+                <div id="rssItems"></div>
+            </div>               
+<div data-role="footer" data-position="fixed" class="footerstyle" data-theme="d">
+          <a href="#RSSREADER" onclick="goHome()" data-role="button" data-transition="slide:left reverse" data-direction="reverse" style="width:28%;" rel="external"><img src="images/Home.png" style="height:20px;width:25px;opacity:0.6"/></a>
+    <a href="#tabstrip-addcat" onclick="goAddCat()" data-role="button" rel="external" data-transition="slide" style="width:36%;font-size:18px;font-weight:bold">GROUPS</a>    
+        <a href="#tabstrip-addcat" onclick="deleteCat()" data-role="button" rel="external" data-transition="slide" style="width:29%;" class="droptarget"><img src="images/trash.png" style="height:20px;width:30px;opacity:0.6"/></a>
+        </div>         
+            </div> 
 
-        <div id="no-map" data-bind="invisible: isGoogleMapsInitialized">
-            Location requires internet connection to display the map.
-        </div>
-        <div id="map-search-wrap" data-bind="visible: isGoogleMapsInitialized">
-            <button id="map-navigate-home" data-bind="click: onNavigateHome"></button>
-            <form onsubmit="return false;">
-                <input id="map-address" type="search" data-bind="value: address" placeholder="Address" />
-                <input id="map-search" type="submit" value="" data-bind="click: onSearchAddress" />
-            </form>
-        </div>
-        <div id="map-canvas" data-bind="visible: isGoogleMapsInitialized"></div>
+<script>
+var catid = 0;
+    
+ function draggableOnDragStart(e) {
+                    console.log("dragstart");
+                }
 
-    </div>
+                function draggableOnDrag(e) {
+                }
+    
+function droptargetOnDragEnter(e) {
+    (e.draggable.currentTarget).addClass("redbg");
+    $(e.dropTarget).addClass("redbg");
+                    console.log("Now drop...");
+                }
 
-    <!--Weather-->
-    <div id="tabstrip-weather"
-        data-role="view"
-        data-title="Weather"
-        data-model="app.weatherService.viewModel">
+                function droptargetOnDragLeave(e) {
+    (e.draggable.currentTarget).removeClass("redbg");
+    $(e.dropTarget).removeClass("redbg");
+                    console.log("(Drop here)");
+                }
 
-        <div class="weather">
-            <p class="weather-title">20-Day Forecast</p>
+                function droptargetOnDrop(e) {
+    app.deleteRecord((e.draggable.currentTarget).attr('id'));
+    alert("Category " + (e.draggable.currentTarget).attr('data') + " deleted");
+    $(e.dropTarget).removeClass("redbg");
+    getAllTheData();
+                }  
+    
+                function droptargetOnDrop2(e) {
+    app.deleteRecordRss((e.draggable.currentTarget).attr('id'));
+    alert("Rss " + (e.draggable.currentTarget).attr('data') + " deleted");
+    $(e.dropTarget).removeClass("redbg");
+    getAllTheData();
+                }       
+    
+$(document).ready(function() {
+                    $(".draggable-item").kendoDraggable({
+                        hint: function(target) { return $("<span class='normal'>To Delete move to Trash</span>") },
+                        dragstart: draggableOnDragStart,
+                        drag: draggableOnDrag
+                    });
+    
+                    $(".droptarget").kendoDropTarget({
+                        dragenter: droptargetOnDragEnter,
+                        dragleave: droptargetOnDragLeave,
+                        drop: droptargetOnDrop
+                    });  
+                        $(".droptargetRss").kendoDropTarget({
+                        dragenter: droptargetOnDragEnter,
+                        dragleave: droptargetOnDragLeave,
+                        drop: droptargetOnDrop2
+                    });  
 
-            <div class="separator">
-                <div class="dark"></div>
-                <div class="light"></div>
-            </div>
+                });    
+    
+</script>        
+      
+        <script>            
 
-            <ul class="forecast-list"
-                data-role="listview"
-                data-bind="source: weatherDataSource"
-                data-template="weather-forecast-template">
-            </ul>
-        </div>
-    </div>
+        var app = {};
+app.db = null;
 
-    <!--Weather forecast template-->
-    <script type="text/x-kendo-tmpl" id="weather-forecast-template">
-        <div>
-            <div class="position-left">
-                <span class="weather-info date">${day}</span>
-            </div>
-            <div class="position-right">
-                <span class="weather-info temperature high">${highTemperature}<sup>&deg;</sup></span>
-                <span class="weather-info temperature low">${lowTemperature}<sup>&deg;</sup></span>
-            </div>
-            <div class="position-center">
-                <span class="weather-icon ${image}"></span>
-            </div>
-        </div>
-    </script>
+app.openDb = function() {
+            
+    if (device.uuid == "e0101010d38bde8e6740011221af335301010333" || device.uuid == "e0908060g38bde8e6740011221af335301010333") {
+          // For debugin in simulator fallback to native SQL Lite
+          console.log("Use built in SQL Lite");
+          app.db = window.openDatabase("RSSDB", "1.0", "RSS Database", 100000);
+      }
+     else {
+         app.db = window.sqlitePlugin.openDatabase("RSSDB");
+     }            
+            
+}
 
-    <!--Layout-->
-    <div data-role="layout" data-id="tabstrip-layout">
+app.createTable = function() {
+    app.db.transaction(function(tx) {
+        tx.executeSql("CREATE TABLE IF NOT EXISTS Categories2 (cid INTEGER PRIMARY KEY ASC, categoryName TEXT)", []);
+            tx.executeSql("CREATE TABLE IF NOT EXISTS Rss (rid INTEGER PRIMARY KEY ASC, rssName TEXT, rssUrl TEXT, catID INTEGER)", []);
+    });
+}          
+app.addCustomCat = function() {
+    app.db.transaction(function(tx) {
+            tx.executeSql("INSERT OR IGNORE INTO Categories2(cid,categoryName) VALUES (1,'TECHNOLOGY')", []);
+            tx.executeSql("INSERT OR IGNORE INTO Categories2(cid,categoryName) VALUES (2,'ENTERTAINMENT')", []);
+            tx.executeSql("INSERT OR IGNORE INTO Categories2(cid,categoryName) VALUES (3,'SPORTS')", []);
+            tx.executeSql("INSERT OR IGNORE INTO Categories2(cid,categoryName) VALUES (4,'WORLD')", []);
+            console.log('test');
+    });
+}                
+        
+app.insertRecord = function(t) {
+    app.db.transaction(function(tx) {
+        var cDate = new Date();
+        tx.executeSql("INSERT INTO Categories2(categoryName) VALUES (?)",
+                      [t],
+                      app.onSuccess,
+                      app.onError);
+    });
+            console.log(t);
+}            
+app.insertRssRecord = function(rn,ci,ru) {          
+    app.db.transaction(function(tx) {
+        var cDate = new Date();
+        tx.executeSql("INSERT INTO Rss(rssName,catID,rssUrl) VALUES (?,?,?)",
+                      [rn,ci,ru],
+                      app.onSuccess,
+                      app.onError);
+    });
+}        
+            
+app.onSuccess = function(tx, r) {
+    console.log("Your SQLite query was successful!");
+}
 
-        <!--Header-->
-        <div data-role="header">
-            <div data-role="navbar">
-                <span data-role="view-title"></span>
-            </div>
-        </div>
+app.onError = function(tx, e) {
+    console.log("SQLite Error: " + e.message);
+}
+            
+app.updateRecord = function(id, t) {
+    app.db.transaction(function(tx) {
+        var mDate = new Date();
+        tx.executeSql("UPDATE Categories2 SET categoryName = ? WHERE cid = ?",
+                      [t, id],
+                      app.onSuccess,
+                      app.onError);
+    });
+}            
+    
+app.deleteRecord = function(id) {
+    app.db.transaction(function(tx) {
+        tx.executeSql("DELETE FROM Categories2 WHERE cid = ?",
+                      [id],
+                      app.onSuccess,
+                      app.onError);
+        tx.executeSql("DELETE FROM Rss WHERE catID = ?",
+                      [id],
+                      app.onSuccess,
+                      app.onError);            
+    });
+}            
+    
+app.deleteRecordRss = function(id) {
+    app.db.transaction(function(tx) {
+        tx.executeSql("DELETE FROM Rss WHERE rid = ?",
+                      [id],
+                      app.onSuccess,
+                      app.onError);
+    });
+}    
+            
+app.selectAllRecords = function(fn) {
+    app.db.transaction(function(tx) {
+        tx.executeSql("SELECT * FROM Categories2 AS C LEFT JOIN Rss AS R ON C.cid = R.catID ORDER BY C.categoryName,R.rssName", [],
+                      fn,
+                      app.onError);
+    });
+} 
+         
+function getAllTheData() {
+    var render = function (tx, rs) {
+        // rs contains our SQLite recordset, at this point you can do anything with it
+        // in this case we'll just loop through it and output the results to the console
+        catItems.innerHTML = "";
+        catItems3.innerHTML = "";
+        var prevCatID = rs.rows.item(0).cid;
+        var first = true;
+            
+            
+        for (var i = 0; i < rs.rows.length; i++) {
+            var currCatID = rs.rows.item(i).cid;
+            if (prevCatID != currCatID || first)
+            {
+                catItems.innerHTML += "<a data-role='draggable' id='"+rs.rows.item(i).cid+"' data='"+rs.rows.item(i).categoryName+"' class='draggable-item km-widget km-button' style='width:80%;' data-transition='slide'>"+rs.rows.item(i).categoryName+"</a>";
+                catItems3.innerHTML += "<div data='"+rs.rows.item(i).categoryName+"' style='padding-left:10px;width:94%;font-size:18px;padding-top:15px;padding-bottom:4px;'><a style='width:85%;font-size:20px;display:inline'>"+rs.rows.item(i).categoryName+"</a> &nbsp; <a href='#tabstrip-addrss' data-transition='slide' style='display:inline;' onclick=setCatID("+rs.rows.item(i).cid+")><img src='images/green-plus.png' style='height:20px;width:20px;'/></a> </div>";
+                if (rs.rows.item(i).rssName != null)
+                {
+                    catItems3.innerHTML += "<a href='RSSJM.html?rss="+rs.rows.item(i).rssUrl+"' data-role='draggable' data-rel='external' class='draggable-item km-widget km-button' id='"+rs.rows.item(i).rid+"' data='"+rs.rows.item(i).rssName+"' style='width:65%;margin-left:20px;' data-transition='slide'>"+rs.rows.item(i).rssName+"</a>";
+                }
+                prevCatID = currCatID;
+                first = false;
+            }
+            else
+                {
+                    prevCatID = currCatID;
+                catItems3.innerHTML += "<a href='RSSJM.html?rss="+rs.rows.item(i).rssUrl+"' data-role='draggable' data-rel='external' class='draggable-item km-widget km-button' id='"+rs.rows.item(i).rid+"' data='"+rs.rows.item(i).rssName+"' style='width:65%;margin-left:20px;' data-transition='slide'>"+rs.rows.item(i).rssName+"</a>";
+                }
 
-        <!--Footer-->
-        <div data-role="footer">
-            <div data-role="tabstrip">
-                <a href="#tabstrip-home" data-icon="home">Home</a>
-                <a href="#tabstrip-login" data-icon="contacts">Login</a>
-                <a href="#tabstrip-location" data-icon="search">Location</a>
-                <a href="#tabstrip-weather" data-icon="globe">Weather</a>
-            </div>
-        </div>
-    </div>
-</body>
+            $(".draggable-item").kendoDraggable({
+                        hint: function(target) { return $("<div class='km-widget km-button'><span class='km-text'>To Delete move to Trash</span></div>") },
+                        dragstart: draggableOnDragStart,
+                        drag: draggableOnDrag
+                    });     
+
+        }
+    }
+
+    app.selectAllRecords(render);
+}   
+
+            
+       document.addEventListener("deviceready", init, false);     
+            
+function init() {
+    /*
+    app.openDb();
+    app.createTable();
+    app.insertRecord('testcat');
+
+    
+    app.openDb();
+        app.deleteRecord(2);
+        app.deleteRecord(4);
+    app.deleteRecord(5);
+    getAllTheData();
+        */
+    app.openDb();
+    app.createTable();
+    app.addCustomCat();
+    getAllTheData();
+}
+            
+function addRss2() {
+                console.log(document.getElementById("txtRss").value);
+                console.log(catid);
+                console.log(document.getElementById("txtRssUrl").value);    
+                console.log('-');                      
+    app.openDb(); 
+    app.createTable();
+	app.insertRssRecord(document.getElementById("txtRss").value, catid, document.getElementById("txtRssUrl").value);
+    getAllTheData();
+    location.href="#RSSREADER";
+}
+function addRss2(rssname,rssurl) {
+    app.openDb(); 
+    app.createTable();
+	app.insertRssRecord(rssname, catid, rssurl);
+    getAllTheData();
+    location.href="#RSSREADER";
+}            
+function setCatID(id)
+            {
+                catid = id;
+                if (catid == 1)
+                {//technology
+                    console.log(catid);
+                    checkLocale2()
+                    
+                }
+                else if (catid == 2)
+                {//entertainment
+                    console.log(catid);
+                    checkLocale3()
+                    
+                }
+                else if (catid == 3)
+                {//sports
+                    console.log(catid);
+                    checkLocale4()
+                    
+                }
+                else if (catid == 4)
+                {//world
+                    console.log(catid);
+                    checkLocale5()  
+                    }
+                else
+                {
+                    rssItems.innerHTML ="";
+                }
+            }
+            
+function addCategory() {   
+	var category = document.getElementById("txtCat");    
+    app.openDb(); 
+    app.createTable();
+	app.insertRecord(category.value);    
+    getAllTheData();
+}         
+          
+function beep() {
+    navigator.notification.vibrate(300);
+navigator.notification.beep(1);    
+}   
+function goAddCat() {
+    navigator.notification.vibrate(300);    
+navigator.notification.beep(1); 
+    location.href="#tabstrip-addcat";
+}
+function deleteCat(){
+    navigator.notification.vibrate(300);    
+navigator.notification.beep(1);     
+    alert("Drag and drop to delete a group");
+}       
+function deleteRss(){
+    navigator.notification.vibrate(300);    
+navigator.notification.beep(1);     
+    alert("Drag and drop to delete a rss");
+}                
+            
+function goHome() {
+    navigator.notification.vibrate(300);
+    navigator.notification.beep(1); 
+    location.href="#RSSREADER";
+}
+            
+            
+function onPrompt(results) {
+        if (results.buttonIndex == 1 && results.input1 != "")
+        {
+            app.openDb();
+        	app.insertRecord(results.input1);
+            alert("Group added");
+            getAllTheData();
+            results.input2;
+            console.log(results.input1);
+        }
+        else
+        {
+            
+        }
+    }
+
+    // Show a custom prompt dialog
+    //
+    function showPrompt() {
+        navigator.notification.prompt(
+            'Please enter a group name',  // message
+            onPrompt,                  // callback to invoke
+            'Add new group',            // title
+            ['Ok','Cancel'],             // buttonLabels
+            'write here a group'                 // defaultText
+        );
+    }            
+            
+            function checkLocale() {
+navigator.globalization.getLocaleName(
+        function (locale) {alert('locale: ' + locale.value + '\n');},
+        function () {alert('Error getting locale\n');}
+      );
+    }            
+
+            function checkLocale2() {
+navigator.globalization.getLocaleName(
+        function (locale) {
+            
+            if (locale.value == "it_IT")
+            {
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"HD Blog\",\"http://feeds.feedburner.com/hd-blog\");'>HD BLOG</button> <button class='button' data-role='button' onclick='addrss2(\"Hardware Upgrade\",\"http://feeds.hwupgrade.it/rss_news.xml\");'>HWupgrade</button> <button class='button' data-role='button' onclick='addrss2(\"Wired\",\"http://www.wired.it/rss.xml\");'>Wired</button> <button class='button' data-role='button' onclick='addrss2(\"Ansa\",\"http://ansa.feedsportal.com/c/34225/f/621714/index.rss\");'>Ansa</button> <button class='button' data-role='button' onclick='addrss2(\"Repubblica\",\"http://www.repubblica.it/rss/tecnologia/rss2.0.xml\");'>Repubblica</button>";
+            }
+            else
+            {
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Wired\",\"http://feeds.wired.com/wired/index\");'>WIRED</button> <button class='button' data-role='button' onclick='addrss2(\"CNET\",\"http://feeds.feedburner.com/cnet/tcoc\");'>CNET</button> <button class='button' data-role='button' onclick='addrss2(\"BBC\",\"http://feeds.bbci.co.uk/news/technology/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss2(\"The Guardian\",\"http://feeds.theguardian.com/theguardian/technology/blog/rss\");'>The Guardian</button>";
+            }
+        
+        },
+        function () {
+                   alert('Error getting locale\n');
+        }
+      );
+    }                          
+
+            function checkLocale4() {
+navigator.globalization.getLocaleName(
+        function (locale) {
+            
+            if (locale.value == "it_IT")
+            {
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Gazzetta\",\"http://www.gazzetta.it/rss/Home.xml\");'>Gazzetta</button> <button class='button' data-role='button' onclick='addrss2(\"Corriere dello Sport\",\"http://corrieredellosport.feedsportal.com/c/34176/f/619144/index.rss\");'>Corriere dello Sport</button> <button class='button' data-role='button' onclick='addrss2(\"Tuttosport\",\"http://tuttosport.feedsportal.com/c/34178/f/619238/index.rss\");'>TuttoSport</button> <button class='button' data-role='button' onclick='addrss2(\"Ansa\",\"http://ansa.feedsportal.com/c/34225/f/621741/index.rss\");'>Ansa</button>";
+            }
+            else
+            {
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Sky Sports\",\"http://www.skysports.com/rss/0,20514,12040,00.xml\");'>SKY SPORTS</button> <button class='button' data-role='button' onclick='addrss2(\"BBC\",\"http://feeds.bbci.co.uk/sport/0/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss2(\"BBC\",\"http://feeds.bbci.co.uk/news/technology/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss2(\"CNN\",\"http://rss.cnn.com/rss/edition_worldsportblog.rss\");'>CNN</button>";
+            }
+        
+        },
+        function () {alert('Error getting locale\n');
+        
+        }
+      );
+    }  
+
+            function checkLocale3() {
+navigator.globalization.getLocaleName(
+        function (locale) {
+            
+            if (locale.value == "it_IT")
+            {
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Ansa\",\"http://ansa.feedsportal.com/c/34225/f/621710/index.rss\");'>ANSA</button> <button class='button' data-role='button' onclick='addrss2(\"BadTaste\",\"http://www.badtaste.it/rss.xml\");'>BadTaste</button> <button class='button' data-role='button' onclick='addrss2(\"AGI\",\"http://agi.feedsportal.com/c/34339/f/625413/index.rss\");'>AGI</button>";
+            }
+            else
+            {
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Fox News\",\"http://feeds.foxnews.com/foxnews/entertainment\");'>FOX NEWS</button> <button class='button' data-role='button' onclick='addrss2(\"BBC\",\"http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss2(\"Huffington\",\"http://www.huffingtonpost.com/feeds/verticals/entertainment/index.xml\");'>Huffington</button>";
+            }
+        
+        },
+        function () {alert('Error getting locale\n');
+        
+        }
+      );
+    }   
+     
+            function checkLocale5() {
+navigator.globalization.getLocaleName(
+        function (locale) {
+            
+            if (locale.value == "it_IT")
+            {
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Euronews\",\"http://feeds.feedburner.com/euronews/it/news/\");'>Euronews</button> <button class='button' data-role='button' onclick='addrss2(\"Yahoo\",\"http://it.notizie.yahoo.com/rss/\");'>Yahoo</button> <button class='button' data-role='button' onclick='addrss2(\"Ansa\",\"http://www.ansa.it/main/notizie/awnplus/mondo/synd/ansait_awnplus_mondo_medsynd_Today_Idx.xml\");'>Ansa</button>";
+            }
+            else
+            {
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Reuters\",\"http://feeds.reuters.com/Reuters/worldNews\");'>Reuters</button> <button class='button' data-role='button' onclick='addrss2(\"BBC\",\"http://feeds.bbci.co.uk/news/world/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss2(\"Cnn\",\"http://rss.cnn.com/rss/edition_world.rss\");'>Cnn</button>";
+            }
+        
+        },
+        function () {alert('Error getting locale\n');
+        
+        }
+      );
+    }   
+                
+     new kendo.mobile.Application($(document.body), {
+         skin: "flat"
+     });           
+                   
+        </script>
+        
+      
+        
+    </body>
 </html>

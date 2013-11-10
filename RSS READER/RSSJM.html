@@ -1,0 +1,284 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title></title> 
+        <link href="jquery-mobile/styles/jquery.mobile-1.3.1.min.css" rel="stylesheet" />
+
+        <script src="cordova.js" type="text/javascript"></script>
+        <script src="jquery-mobile/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+        <script src="jquery-mobile/js/jquery.mobile-1.3.1.min.js" type="text/javascript"></script>
+        
+        <style>
+            img {max-width: 100%;height: auto;}
+            embed {max-width: 100%;height: auto;}
+            
+            .loading-grid-page {
+color: #ffffff;
+font: 24px sans-serif;
+letter-spacing: 1px;
+text-transform: uppercase;
+background: #111111 url('images/ajax-loader-black.gif') no-repeat 15px center;
+border-radius: 2px;
+border: 1px solid #111111;
+text-align: center;
+width: 100%%;
+                height:100%;
+position: fixed;
+left: 0;
+top: 0;
+opacity: 0.8;
+z-index: 1000000;
+                
+                
+                
+}    
+        </style>
+
+
+</head> 
+<body>
+    
+<div id="div_Message" class="loading-grid-page"><br /><br /><br /><br/><br/><br/><br/>LOADING PAGE...</div>
+
+        <script type="text/javascript">
+
+            
+            
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+            
+/* configuration */
+var maxLength = 80;
+/* writing HTML */
+document.write(
+  '<div data-role="page" id="list">' +
+  '  <div data-role="header" data-position="fixed"><a href="index.html" data-role="button" data-icon="home" data-transition="flip" rel="external">Rss List</a>' +
+  '    <h1><span id="widgetTitle">'+getParameterByName("titolo")+'.</span> ' +
+  '      <span style="font-size: x-small">(rss)</span></h1>' +
+  '  </div>' +
+  '  <div data-role="content">' +
+  '    <ul data-role="listview" data-filter="true" id="articleList">'
+);
+for(var i=1; i<=maxLength; i++){
+  document.write(
+    '<li id="list' + i + '"><a href="#article' + i + '" id="link' + i + '" data-transition="flip">&nbsp;</a></li>'
+  );
+}
+document.write(
+  '    </ul>' +
+  '  </div>' +
+  '</div>'
+);
+for(i=1; i<=maxLength; i++){
+  document.write(
+    '<div data-role="page" id="article' + i + '" class="allpage">' +
+    '  <div data-role="header" data-position="fixed">' +
+    '    <a href="#list" data-role="button" data-icon="home" data-back="true" data-transition="flip">Home</a>' +
+    '    <h1 id="articleHeader' + i + '">&nbsp;</h1>' +
+
+'<a href="#popupMenu" data-rel="popup" data-role="button" data-inline="true" data-transition="flip" data-icon="gear" class="ui-btn-right">Share</a>'+
+'<div data-role="popup" id="popupMenu" data-theme="d">'+
+'        <ul data-role="listview" data-inset="true" style="min-width:210px;" data-theme="d">'+
+'            <li data-role="divider" >Share on...</li>'+
+'            <li><a id="facebookButton' + i + '" href="#" data-transition="flip">FACEBOOK</a></li>'+
+'            <li><a id="tweetButton' + i + '" href="#" data-transition="flip">TWITTER</a></li>'+
+'            <li><a id="googleButton' + i + '" href="#" data-transition="flip">GOOGLE+</a></li>'+
+'            <li><a id="emailButton' + i + '" href="#" data-transition="flip">E-MAIL</a></li>'+
+'        </ul>'+
+'</div>         '+   
+            
+    '  </div>' +
+    '  <div data-role="content" id="contentSingle' + i + '">' +
+    '    <div id="articleContent' + i + '" class="articleContent"></div>' +
+    '    <div data-role="footer" data-position="fixed" style="width:100%;text-align: center;padding:3px" data-theme="d">' +
+    '      <a href="#article' + String(i-1) + '" data-role="button" data-icon="arrow-l"' +
+    '        data-inline="true" class="prevButton" class="ui-btn-left" data-transition="slide" data-direction="reverse" style="width:25%;">Prev</a>' +
+    '    <a href="#" id="openButton' + i + '" data-role="button" data-icon="plus"' +
+    '      class="ui-btn-center" rel="external" data-transition="flip" style="width:42%;">Go To Site</a>' +
+    '      <a href="#article' + String(i+1) + '" data-role="button" data-icon="arrow-r"' +
+    '        data-inline="true" class="nextButton" data-iconpos="right" class="ui-btn-right" data-transition="slide" style="width:25%;">Next</a>' +
+    '    </div>' +
+    '  </div>' +
+    '</div>'
+  );
+}
+/* JSONP */
+$(function(){
+  // getOnlineFeed('http://www4.lehigh.edu/news/rss/LUnews_rss.xml');
+  getOnlineFeed(getParameterByName("rss"));
+  
+});
+/* functions */
+var listEntries = function(json) {
+  if (!json.responseData.feed.entries) return false;
+  $('#widgetTitle').text(json.responseData.feed.title);
+  var articleLength =json.responseData.feed.entries.length;
+  articleLength = (articleLength > maxLength) ? maxLength : articleLength;
+  for (var i = 1; i <= articleLength ; i++) {
+    var entry = json.responseData.feed.entries[i-1];
+    $('#link' + i).text(entry.title);
+    $('#articleHeader' + i).text(entry.title);
+    $('#openButton' + i).attr('href', entry.link);      
+    $('#facebookButton' + i).attr('href', 'http://m.facebook.com/sharer.php?u='+entry.link+'&t='+entry.title);
+    $('#tweetButton' + i).attr('href', 'http://mobile.twitter.com/home?text='+entry.link+'&url='+entry.title+'');
+    $('#googleButton' + i).attr('href', 'https://plus.google.com/share?url='+entry.link+'');
+    $('#linkedinButton' + i).attr('href', 'http://www.linkedin.com/shareArticle?mini=true&text='+entry.title+'&url='+entry.link+'&title='+entry.title);
+    $('#emailButton' + i).attr('href', 'mailto:?subject=Check this news:'+entry.title+'&body='+entry.link+'');
+    $('#articleContent' + i).append(entry.content);
+  }
+  $('#article1 .prevButton').remove();
+  $('#article' + articleLength + ' .nextButton').remove();
+  if (articleLength < maxLength) {
+    for (i = articleLength + 1; i <= maxLength; i++) {
+      $('#list' + i).remove();
+      $('#article' + i).remove();
+    }
+  }
+    document.getElementById("div_Message").style.display='none';     
+};
+var getOnlineFeed = function(url) {
+  var script = document.createElement('script');
+  script.setAttribute('src', 'http://ajax.googleapis.com/ajax/services/feed/load?callback=listEntries&hl=ja&output=json-in-script&q='
+                      + encodeURIComponent(url)
+                      + '&v=1.0&num=' + maxLength);
+  script.setAttribute('type', 'text/javascript');
+  document.documentElement.firstChild.appendChild(script);
+};
+var getOfflineFeed = function(url) {
+  var script = document.createElement('script');
+  script.setAttribute('src', url);
+  script.setAttribute('type', 'text/javascript');
+  document.documentElement.firstChild.appendChild(script);
+};          
+function isNumber (o) {
+  return ! isNaN (o-0) && o !== null && o.replace(/^\s\s*/, '') !== "" && o !== false;
+}
+var x= 0;            
+            
+            document.addEventListener("deviceready", function(){
+                
+$('.allpage').swipeleft(function(e) {
+            var artid = window.location.hash.toString().substring(window.location.hash.toString().length - 1);
+            var artid4 = window.location.hash.toString().substring(window.location.hash.toString().length - 2).charAt(0);
+            var newartid = parseInt(artid) + 1;
+            var newartid4 = parseInt(artid4);
+
+            if (isNaN(newartid4))
+            {
+                if (newartid == 10)
+                {
+                    newartid = 0;
+                    newartid4 = 1;
+                    $.mobile.changePage(window.location.hash.toString().substring(0, window.location.hash.toString().length - 1).toString() + newartid4 + newartid, {
+    transition: "slide"
+});
+                }
+                else
+                {
+                    $.mobile.changePage(window.location.hash.toString().substring(0, window.location.hash.toString().length - 1).toString() + newartid, {
+    transition: "slide"
+});
+                } 
+            }
+            else
+            {
+                if (newartid == 10)
+                {
+                    newartid = 0;
+                    newartid4 = newartid4 + 1;
+                    $.mobile.changePage(window.location.hash.toString().substring(0, window.location.hash.toString().length - 1).toString() + newartid4 + newartid, {
+    transition: "slide"
+});
+                }
+                else
+                {
+                    if (newartid == 9)
+                    {
+                        newartid = 0;
+                        newartid4 = newartid4 + 1;
+                    }                    
+                    $.mobile.changePage(window.location.hash.toString().substring(0, window.location.hash.toString().length - 2).toString() + newartid4 + newartid, {
+    transition: "slide"
+});                   
+                }
+            }                
+    
+});
+            
+$('.allpage').swiperight(function() {
+    
+   var artid2 = window.location.hash.toString().substring(window.location.hash.toString().length - 1);
+            var artid3 = window.location.hash.toString().substring(window.location.hash.toString().length - 2).charAt(0);           
+            if (artid2 != "1" || !isNaN(artid3))
+            {
+                var newartid2 = parseInt(artid2) - 1;
+                var newartid3 = parseInt(artid3);
+
+                if (isNaN(newartid3))
+                {                
+                    $.mobile.changePage(window.location.hash.toString().substring(0, window.location.hash.toString().length - 1).toString() + newartid2, {
+    transition: "slide",
+    reverse: true
+});
+                }
+                else
+                {
+                    if (newartid3 == 1)
+                    {                       
+                        if (newartid2 == -1)
+                        {
+                            newartid2 = 9;
+                            $.mobile.changePage(window.location.hash.toString().substring(0, window.location.hash.toString().length - 2).toString() + newartid2, {
+    transition: "slide",
+    reverse: true
+});
+                        }
+                        else
+                        {                          
+                            $.mobile.changePage(window.location.hash.toString().substring(0, window.location.hash.toString().length - 2).toString() + newartid3 + newartid2, {
+    transition: "slide",
+    reverse: true
+});
+                        }                      
+                    }
+                    else
+                    {
+                        if (newartid2 == -1)
+                        {
+                            newartid2 = 9;
+                            newartid3 = newartid3 - 1;
+                           $.mobile.changePage(window.location.hash.toString().substring(0, window.location.hash.toString().length - 2).toString() + newartid3 + newartid2, {
+    transition: "slide",
+    reverse: true
+});
+                        }
+                        else
+                        {                        
+                            $.mobile.changePage(window.location.hash.toString().substring(0, window.location.hash.toString().length - 2).toString() + newartid3 + newartid2, {
+    transition: "slide",
+    reverse: true
+});
+                        }                      
+                    }
+                }
+            }
+            else
+            {
+                location.href="#list";
+            }        
+    
+    
+ 
+});              
+           },false);
+            
+       
+        </script>    
+    
+</body>
+</html>
