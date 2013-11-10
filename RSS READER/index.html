@@ -231,14 +231,12 @@ app.db = null;
 
 app.openDb = function() {
             
-    if (device.uuid == "e0101010d38bde8e6740011221af335301010333" || device.uuid == "e0908060g38bde8e6740011221af335301010333") {
-          // For debugin in simulator fallback to native SQL Lite
-          console.log("Use built in SQL Lite");
-          app.db = window.openDatabase("RSSDB", "1.0", "RSS Database", 100000);
-      }
-     else {
-         app.db = window.sqlitePlugin.openDatabase("RSSDB");
-     }            
+    if (window.sqlitePlugin !== undefined) {
+        app.db = window.sqlitePlugin.openDatabase("RSSDB");
+    } else {
+        // For debugging in simulator fallback to native SQL Lite
+        app.db = window.openDatabase("RSSDB", "1.0", "RSS Database", 100000);
+    }     
             
 }
 
