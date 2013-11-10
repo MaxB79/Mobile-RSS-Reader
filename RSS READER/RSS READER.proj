@@ -6,9 +6,8 @@
     <AppIdentifier>com.telerik.RSSREADER</AppIdentifier>
     <ProjectName>RSS READER</ProjectName>
     <IsRunnable>true</IsRunnable>
-    <FrameworkVersion>3.0.0</FrameworkVersion>
     <AndroidPermissions>android.permission.VIBRATE;android.permission.INTERNET</AndroidPermissions>
-    <CorePlugins>org.apache.cordova.AudioHandler;org.apache.cordova.battery-status;org.apache.cordova.camera;org.apache.cordova.console;org.apache.cordova.contacts;org.apache.cordova.device;org.apache.cordova.device-motion;org.apache.cordova.device-orientation;org.apache.cordova.dialogs;org.apache.cordova.file;org.apache.cordova.file-transfer;org.apache.cordova.geolocation;org.apache.cordova.globalization;org.apache.cordova.inappbrowser;org.apache.cordova.media-capture;org.apache.cordova.network-information;org.apache.cordova.splashscreen;org.apache.cordova.vibration</CorePlugins>
+    <CorePlugins>com.phonegap.plugins.sqlite;org.apache.cordova.AudioHandler;org.apache.cordova.battery-status;org.apache.cordova.camera;org.apache.cordova.console;org.apache.cordova.contacts;org.apache.cordova.device;org.apache.cordova.device-motion;org.apache.cordova.device-orientation;org.apache.cordova.dialogs;org.apache.cordova.file;org.apache.cordova.file-transfer;org.apache.cordova.geolocation;org.apache.cordova.globalization;org.apache.cordova.inappbrowser;org.apache.cordova.media-capture;org.apache.cordova.network-information;org.apache.cordova.splashscreen;org.apache.cordova.vibration</CorePlugins>
     <DeviceOrientations>Portrait;Landscape</DeviceOrientations>
     <iOSStatusBarStyle>Default</iOSStatusBarStyle>
     <AndroidHardwareAcceleration>false</AndroidHardwareAcceleration>
@@ -17,6 +16,7 @@
     <iOSDeviceFamily>1;2</iOSDeviceFamily>
     <iOSBackgroundMode />
     <AndroidVersionCode>1</AndroidVersionCode>
+    <FrameworkVersion>3.0.0</FrameworkVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Telerik\ICE\Tools\Mobile\MobileTools.targets" />
 </Project>
