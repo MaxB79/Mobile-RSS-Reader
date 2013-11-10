@@ -154,7 +154,7 @@ z-index: 1000000;
             <div style="padding-left:20px; color:#000000">            
                 Name:<br /> <input class="inputBox1" type="text" style="color:#000000" id="txtRss" size="30" height="630px" /><br />
                 Url:<br /> <input class="inputBox2" type="text" style="color:#000000" id="txtRssUrl" value="http://" size="30" height="630px" /><br />
-                <button class="button" id="addButton" onclick="addRss2();" style="padding:10px">Add</button>     <br/><br/>
+                <button class="button" id="addButton" onclick="addRss3();" style="padding:10px">Add</button>     <br/><br/>
              <br/>
                 
                 <div id="rssItems"></div>
@@ -389,7 +389,7 @@ function init() {
     getAllTheData();
 }
             
-function addRss2() {
+function addRss3() {
                 console.log(document.getElementById("txtRss").value);
                 console.log(catid);
                 console.log(document.getElementById("txtRssUrl").value);    
@@ -400,7 +400,7 @@ function addRss2() {
     getAllTheData();
     location.href="#RSSREADER";
 }
-function addRss2(rssname,rssurl) {
+function addrss3(rssname,rssurl) {
     app.openDb(); 
     app.createTable();
 	app.insertRssRecord(rssname, catid, rssurl);
@@ -515,11 +515,11 @@ navigator.globalization.getLocaleName(
             
             if (locale.value == "it_IT")
             {
-                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"HD Blog\",\"http://feeds.feedburner.com/hd-blog\");'>HD BLOG</button> <button class='button' data-role='button' onclick='addrss2(\"Hardware Upgrade\",\"http://feeds.hwupgrade.it/rss_news.xml\");'>HWupgrade</button> <button class='button' data-role='button' onclick='addrss2(\"Wired\",\"http://www.wired.it/rss.xml\");'>Wired</button> <button class='button' data-role='button' onclick='addrss2(\"Ansa\",\"http://ansa.feedsportal.com/c/34225/f/621714/index.rss\");'>Ansa</button> <button class='button' data-role='button' onclick='addrss2(\"Repubblica\",\"http://www.repubblica.it/rss/tecnologia/rss2.0.xml\");'>Repubblica</button>";
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss3(\"HD Blog\",\"http://feeds.feedburner.com/hd-blog\");'>HD BLOG</button> <button class='button' data-role='button' onclick='addrss3(\"Hardware Upgrade\",\"http://feeds.hwupgrade.it/rss_news.xml\");'>HWupgrade</button> <button class='button' data-role='button' onclick='addrss3(\"Wired\",\"http://www.wired.it/rss.xml\");'>Wired</button> <button class='button' data-role='button' onclick='addrss3(\"Ansa\",\"http://ansa.feedsportal.com/c/34225/f/621714/index.rss\");'>Ansa</button> <button class='button' data-role='button' onclick='addrss3(\"Repubblica\",\"http://www.repubblica.it/rss/tecnologia/rss2.0.xml\");'>Repubblica</button>";
             }
             else
             {
-                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Wired\",\"http://feeds.wired.com/wired/index\");'>WIRED</button> <button class='button' data-role='button' onclick='addrss2(\"CNET\",\"http://feeds.feedburner.com/cnet/tcoc\");'>CNET</button> <button class='button' data-role='button' onclick='addrss2(\"BBC\",\"http://feeds.bbci.co.uk/news/technology/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss2(\"The Guardian\",\"http://feeds.theguardian.com/theguardian/technology/blog/rss\");'>The Guardian</button>";
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss3(\"Wired\",\"http://feeds.wired.com/wired/index\");'>WIRED</button> <button class='button' data-role='button' onclick='addrss3(\"CNET\",\"http://feeds.feedburner.com/cnet/tcoc\");'>CNET</button> <button class='button' data-role='button' onclick='addrss3(\"BBC\",\"http://feeds.bbci.co.uk/news/technology/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss3(\"The Guardian\",\"http://feeds.theguardian.com/theguardian/technology/blog/rss\");'>The Guardian</button>";
             }
         
         },
@@ -535,11 +535,11 @@ navigator.globalization.getLocaleName(
             
             if (locale.value == "it_IT")
             {
-                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Gazzetta\",\"http://www.gazzetta.it/rss/Home.xml\");'>Gazzetta</button> <button class='button' data-role='button' onclick='addrss2(\"Corriere dello Sport\",\"http://corrieredellosport.feedsportal.com/c/34176/f/619144/index.rss\");'>Corriere dello Sport</button> <button class='button' data-role='button' onclick='addrss2(\"Tuttosport\",\"http://tuttosport.feedsportal.com/c/34178/f/619238/index.rss\");'>TuttoSport</button> <button class='button' data-role='button' onclick='addrss2(\"Ansa\",\"http://ansa.feedsportal.com/c/34225/f/621741/index.rss\");'>Ansa</button>";
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss3(\"Gazzetta\",\"http://www.gazzetta.it/rss/Home.xml\");'>Gazzetta</button> <button class='button' data-role='button' onclick='addrss3(\"Corriere dello Sport\",\"http://corrieredellosport.feedsportal.com/c/34176/f/619144/index.rss\");'>Corriere dello Sport</button> <button class='button' data-role='button' onclick='addrss3(\"Tuttosport\",\"http://tuttosport.feedsportal.com/c/34178/f/619238/index.rss\");'>TuttoSport</button> <button class='button' data-role='button' onclick='addrss3(\"Ansa\",\"http://ansa.feedsportal.com/c/34225/f/621741/index.rss\");'>Ansa</button>";
             }
             else
             {
-                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Sky Sports\",\"http://www.skysports.com/rss/0,20514,12040,00.xml\");'>SKY SPORTS</button> <button class='button' data-role='button' onclick='addrss2(\"BBC\",\"http://feeds.bbci.co.uk/sport/0/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss2(\"BBC\",\"http://feeds.bbci.co.uk/news/technology/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss2(\"CNN\",\"http://rss.cnn.com/rss/edition_worldsportblog.rss\");'>CNN</button>";
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss3(\"Sky Sports\",\"http://www.skysports.com/rss/0,20514,12040,00.xml\");'>SKY SPORTS</button> <button class='button' data-role='button' onclick='addrss3(\"BBC\",\"http://feeds.bbci.co.uk/sport/0/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss3(\"BBC\",\"http://feeds.bbci.co.uk/news/technology/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss3(\"CNN\",\"http://rss.cnn.com/rss/edition_worldsportblog.rss\");'>CNN</button>";
             }
         
         },
@@ -555,11 +555,11 @@ navigator.globalization.getLocaleName(
             
             if (locale.value == "it_IT")
             {
-                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Ansa\",\"http://ansa.feedsportal.com/c/34225/f/621710/index.rss\");'>ANSA</button> <button class='button' data-role='button' onclick='addrss2(\"BadTaste\",\"http://www.badtaste.it/rss.xml\");'>BadTaste</button> <button class='button' data-role='button' onclick='addrss2(\"AGI\",\"http://agi.feedsportal.com/c/34339/f/625413/index.rss\");'>AGI</button>";
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss3(\"Ansa\",\"http://ansa.feedsportal.com/c/34225/f/621710/index.rss\");'>ANSA</button> <button class='button' data-role='button' onclick='addrss3(\"BadTaste\",\"http://www.badtaste.it/rss.xml\");'>BadTaste</button> <button class='button' data-role='button' onclick='addrss3(\"AGI\",\"http://agi.feedsportal.com/c/34339/f/625413/index.rss\");'>AGI</button>";
             }
             else
             {
-                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Fox News\",\"http://feeds.foxnews.com/foxnews/entertainment\");'>FOX NEWS</button> <button class='button' data-role='button' onclick='addrss2(\"BBC\",\"http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss2(\"Huffington\",\"http://www.huffingtonpost.com/feeds/verticals/entertainment/index.xml\");'>Huffington</button>";
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss3(\"Fox News\",\"http://feeds.foxnews.com/foxnews/entertainment\");'>FOX NEWS</button> <button class='button' data-role='button' onclick='addrss3(\"BBC\",\"http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss3(\"Huffington\",\"http://www.huffingtonpost.com/feeds/verticals/entertainment/index.xml\");'>Huffington</button>";
             }
         
         },
@@ -575,11 +575,11 @@ navigator.globalization.getLocaleName(
             
             if (locale.value == "it_IT")
             {
-                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Euronews\",\"http://feeds.feedburner.com/euronews/it/news/\");'>Euronews</button> <button class='button' data-role='button' onclick='addrss2(\"Yahoo\",\"http://it.notizie.yahoo.com/rss/\");'>Yahoo</button> <button class='button' data-role='button' onclick='addrss2(\"Ansa\",\"http://www.ansa.it/main/notizie/awnplus/mondo/synd/ansait_awnplus_mondo_medsynd_Today_Idx.xml\");'>Ansa</button>";
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss3(\"Euronews\",\"http://feeds.feedburner.com/euronews/it/news/\");'>Euronews</button> <button class='button' data-role='button' onclick='addrss3(\"Yahoo\",\"http://it.notizie.yahoo.com/rss/\");'>Yahoo</button> <button class='button' data-role='button' onclick='addrss3(\"Ansa\",\"http://www.ansa.it/main/notizie/awnplus/mondo/synd/ansait_awnplus_mondo_medsynd_Today_Idx.xml\");'>Ansa</button>";
             }
             else
             {
-                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss2(\"Reuters\",\"http://feeds.reuters.com/Reuters/worldNews\");'>Reuters</button> <button class='button' data-role='button' onclick='addrss2(\"BBC\",\"http://feeds.bbci.co.uk/news/world/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss2(\"Cnn\",\"http://rss.cnn.com/rss/edition_world.rss\");'>Cnn</button>";
+                rssItems.innerHTML = "Add one of the following Rss:<br /> <button class='button' data-role='button' onclick='addrss3(\"Reuters\",\"http://feeds.reuters.com/Reuters/worldNews\");'>Reuters</button> <button class='button' data-role='button' onclick='addrss3(\"BBC\",\"http://feeds.bbci.co.uk/news/world/rss.xml?edition=uk\");'>BBC</button> <button class='button' data-role='button' onclick='addrss3(\"Cnn\",\"http://rss.cnn.com/rss/edition_world.rss\");'>Cnn</button>";
             }
         
         },
