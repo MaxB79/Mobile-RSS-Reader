@@ -59,12 +59,6 @@ z-index: 1000000;
     <body>
         <div id="RSSREADER" data-role="view" data-title="My Rss">
             <img src="styles/images/banner4-rss.jpg" style="max-height:70px;" />
-  <!--       
-<a href="RSSJM.html?rss=http://corrieredellosport.feedsportal.com/c/34176/f/619179/index.rss&titolo=Roma Corriere" data-role="button" data-rel="external" style="width:65%;margin-left:20px">RSS Roma Corriere</a>
-    <br />
-    <a href="RSSJM.html?rss=http://feeds.feedburner.com/hd-blog&titolo=HD BLOG" data-role="button" data-rel="external" style="width:65%;margin-left:20px;">RSS HD BLOG</a>
-   <br /><br />
-  -->
         <div style="color:#000000" id="catItems3"></div>
             <div id="div_Message" style="display:none;" class="loading-grid-page">LOADING PAGE...</div>
 
@@ -81,14 +75,7 @@ z-index: 1000000;
         <div id="tabstrip-addcat" 
              data-role="view">
   <img src="styles/images/banner4-rss.jpg" style="max-height:70px;"/>
-          <br />
-            <!--
-            <h1>Add a group:</h1>
-            <div style="padding-left:20px; color:#000000">            
-                <input class="inputBox" type="text" style="color:#000000" id="txtCat" placeholder="Insert here a Group" />
-                <button class="button" id="addButton" onclick="addCategory(); return false;">Add</button>     <br/>       
-        -->
-            
+          <br />            
             <div style="margin-left:20px;"> 
                 <div class="results">
                         <h3>Groups:</h3>
@@ -96,9 +83,7 @@ z-index: 1000000;
                     </div>
                     <div class="separator"></div>
                 <div id="catItems"></div>  
-<br />
-
-                
+<br />                
             </div>     
             
             
@@ -106,21 +91,7 @@ z-index: 1000000;
           <a href="#RSSREADER" onclick="goHome()" data-role="button" data-transition="slide:left reverse" data-direction="reverse" style="width:28%;" rel="external"><img src="images/Home.png" style="height:20px;width:25px;opacity:0.6"/></a>
     <a onclick="showPrompt(); return false;" data-role="button" data-transition="slide" style="width:36%;" rel="external"><img src="images/Add2.png" style="height:20px;width:20px;opacity:0.5"/></a>
         <a href="#tabstrip-addcat" onclick="deleteCat()" data-role="button" rel="external" data-transition="slide" style="width:29%;" class="droptarget"><img src="images/trash.png" style="height:20px;width:30px;opacity:0.6"/></a>
-        </div>       
-                             
-
-      <!--      
-  <div class="draggable-container">
-    
-      
-</div>
-            -->
-            <!--
-            <div id="1" class="draggable-item"><a style="width:99%;" class="km-widget km-button"><span class="km-text">RSS Roma Corriere</span></a></div>
-
-            <div id="2" class="droptarget" style="width:200px;height:200px;background-color:#000000">TEST</div>
-            -->
-          
+        </div>               
 
 <style scoped>
     .draggable-container {
@@ -364,18 +335,6 @@ function getAllTheData() {
        document.addEventListener("deviceready", init, false);     
             
 function init() {
-    /*
-    app.openDb();
-    app.createTable();
-    app.insertRecord('testcat');
-
-    
-    app.openDb();
-        app.deleteRecord(2);
-        app.deleteRecord(4);
-    app.deleteRecord(5);
-    getAllTheData();
-        */
     app.openDb();
     app.createTable();
     app.addCustomCat();
@@ -405,25 +364,18 @@ function setCatID(id)
                 catid = id;
                 if (catid == 1)
                 {//technology
-                    console.log(catid);
-                    checkLocale2()
-                    
+                    checkLocale2()                    
                 }
                 else if (catid == 2)
                 {//entertainment
-                    console.log(catid);
-                    checkLocale3()
-                    
+                    checkLocale3()                    
                 }
                 else if (catid == 3)
                 {//sports
-                    console.log(catid);
-                    checkLocale4()
-                    
+                    checkLocale4()                    
                 }
                 else if (catid == 4)
                 {//world
-                    console.log(catid);
                     checkLocale5()  
                     }
                 else
